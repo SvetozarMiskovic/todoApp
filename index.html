@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <section class="todo-app">
+      <div class="container grid">
+        <div class="todo-section">
+          <form>
+            <label for="todoTask">Add a daily task!</label><br />
+            <input
+              type="text"
+              name="todoTask"
+              id="todoTask"
+              placeholder="Write something..."
+            />
+            <input type="submit" id="submitBtn" value="Add a task!" />
+          </form>
+        </div>
+        <div class="task-section">
+          <div class="task-container">
+            <ul>
+              <li>Asa Lorem <i class="fas fa-eraser"></i></li>
+              <li>asa2 <i class="fas fa-eraser"></i></li>
+              <li>asa3 <i class="fas fa-eraser"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="app.js"></script>
+  </body>
+</html>
