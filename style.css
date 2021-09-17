@@ -12,7 +12,7 @@ li {
   justify-content: space-between;
   list-style: none;
   border-bottom: 1px #63b4b8 solid;
-  word-break: break-all;
+  word-break: break-all; 
 
   margin: 0.5rem 0;
 }
