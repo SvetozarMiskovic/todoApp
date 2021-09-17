@@ -1,4 +1,5 @@
 {
+  "homepage": "http://svetozarmiskovic.github.io/todoApp",
   "name": "todoapp",
   "version": "1.0.0",
   "description": "",
@@ -15,7 +16,6 @@
   "bugs": {
     "url": "https://github.com/SvetozarMiskovic/todoApp/issues"
   },
-  "homepage": "https://github.com/SvetozarMiskovic/todoApp#readme",
   "devDependencies": {
     "gh-pages": "^3.2.3"
   }
