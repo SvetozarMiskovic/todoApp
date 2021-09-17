@@ -1,13 +1,16 @@
 const form = document.querySelector('form');
 const textInput = document.getElementById('todoTask');
 const ul = document.querySelector('.task-container ul');
+const clearAll = document.querySelector('.clear-all');
 
+// Once DOM is loaded, check the LS and render from it
 document.addEventListener('DOMContentLoaded', checkLS);
 
+// Add a task function
 function addTask(text) {
   const li = document.createElement('li');
   li.classList.add('task-item');
-  if (text == '' || text === null) {
+  if (text == '' || text == null) {
     return;
   } else {
     li.innerHTML = text + `<i class="fas fa-eraser removeBtn"></i>`;
@@ -15,6 +18,7 @@ function addTask(text) {
   }
   textInput.value = '';
 }
+// Event listeners
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -31,11 +35,21 @@ ul.addEventListener('click', function (e) {
 
     const ls = JSON.parse(localStorage.getItem('tasks'));
     const newLs = ls.filter(lsItem => lsItem !== clickText);
-    console.log(newLs);
+
     localStorage.setItem('tasks', JSON.stringify(newLs));
   }
 });
 
+clearAll.addEventListener('click', function () {
+  const tasksEl = document.querySelectorAll('.task-item');
+
+  tasksEl.forEach(function (task) {
+    task.remove();
+  });
+
+  localStorage.clear();
+});
+// Add to Local Storage
 function storeLS() {
   const tasksEl = document.querySelectorAll('.task-item');
   const tasks = [];
@@ -47,8 +61,10 @@ function storeLS() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+// Check, pull and render from local storage
 function checkLS() {
   const lsTasks = JSON.parse(localStorage.getItem('tasks'));
+
   if (lsTasks != undefined || lsTasks != null) {
     lsTasks.forEach(function (task) {
       const li = document.createElement('li');

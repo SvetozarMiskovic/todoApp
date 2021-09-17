@@ -35,7 +35,7 @@ li i {
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 2fr;
   gap: 5px;
 }
 
@@ -103,9 +103,29 @@ input[type='submit']:hover {
 }
 
 .task-container {
+  display: flex;
+  flex-direction: column;
   background-color: #4b3869;
   margin: 1rem 0;
   padding: 1.5rem;
   color: white;
   border-radius: 3%;
+}
+
+.clear-all {
+  border: 1px solid black;
+  background-color: #63b4b8;
+  padding: 1rem;
+  margin: 0.5rem auto;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.clear-all a {
+  color: #fff;
+  text-decoration: none;
+}
+.clear-all:hover {
+  transform: scale(1.1);
+  transition: ease-out 0.2s;
 }
