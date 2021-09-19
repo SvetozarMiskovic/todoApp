@@ -9,17 +9,28 @@ document.addEventListener('DOMContentLoaded', checkLS);
 // Add a task function
 function addTask(text) {
   const li = document.createElement('li');
+
   li.classList.add('task-item');
+
   if (text == '' || text == null) {
     return;
   } else {
-    li.innerHTML = text + `<i class="fas fa-eraser removeBtn"></i>`;
+    li.innerHTML =
+      text +
+      `<span class="btns"><i class="fas fa-edit editBtn"></i> <i class="fas fa-eraser removeBtn"></i></span>`;
+
     ul.appendChild(li);
   }
   textInput.value = '';
 }
 // Event listeners
+textInput.addEventListener('focusin', function () {
+  textInput.placeholder = 'npr. Operi ves.';
+});
 
+textInput.addEventListener('focusout', function () {
+  textInput.placeholder = 'Write something...';
+});
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -29,14 +40,21 @@ form.addEventListener('submit', function (e) {
 
 ul.addEventListener('click', function (e) {
   const click = e.target;
-  const clickText = e.target.parentElement.textContent;
+  const clickText = e.target.parentElement.parentElement.textContent;
+
   if (click.classList.contains('removeBtn')) {
-    click.parentElement.remove();
+    click.parentElement.parentElement.remove();
 
     const ls = JSON.parse(localStorage.getItem('tasks'));
-    const newLs = ls.filter(lsItem => lsItem !== clickText);
+    const newLs = ls.filter(lsItem => lsItem != clickText);
 
     localStorage.setItem('tasks', JSON.stringify(newLs));
+  } else if (click.classList.contains('editBtn')) {
+    const editValue = [];
+    editValue.push(clickText);
+
+    console.log(editValue);
+    localStorage.setItem('editValue', editValue);
   }
 });
 
@@ -49,6 +67,7 @@ clearAll.addEventListener('click', function () {
 
   localStorage.clear();
 });
+
 // Add to Local Storage
 function storeLS() {
   const tasksEl = document.querySelectorAll('.task-item');
@@ -69,7 +88,9 @@ function checkLS() {
     lsTasks.forEach(function (task) {
       const li = document.createElement('li');
       li.classList.add('task-item');
-      li.innerHTML = task + `<i class="fas fa-eraser removeBtn"></i>`;
+      li.innerHTML =
+        task +
+        `<span class="btns"><i class="fas fa-edit editBtn"></i> <i class="fas fa-eraser removeBtn"></i></span>`;
       ul.appendChild(li);
     });
   }
