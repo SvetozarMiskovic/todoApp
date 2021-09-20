@@ -49,13 +49,7 @@ ul.addEventListener('click', function (e) {
     const newLs = ls.filter(lsItem => lsItem != clickText);
 
     localStorage.setItem('tasks', JSON.stringify(newLs));
-  } else if (click.classList.contains('editBtn')) {
-    const editValue = [];
-    editValue.push(clickText);
-
-    console.log(editValue);
-    localStorage.setItem('editValue', editValue);
-  }
+  } 
 });
 
 clearAll.addEventListener('click', function () {
