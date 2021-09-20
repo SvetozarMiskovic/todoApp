@@ -2,7 +2,7 @@ const form = document.querySelector('form');
 const textInput = document.getElementById('todoTask');
 const ul = document.querySelector('.task-container ul');
 const clearAll = document.querySelector('.clear-all');
-
+const saveBtn = document.querySelector('.saveBtn');
 // Once DOM is loaded, check the LS and render from it
 document.addEventListener('DOMContentLoaded', checkLS);
 
@@ -23,6 +23,8 @@ function addTask(text) {
   }
   textInput.value = '';
 }
+
+// function editTask(text) {}
 // Event listeners
 textInput.addEventListener('focusin', function () {
   textInput.placeholder = 'npr. Operi ves.';
@@ -41,20 +43,14 @@ form.addEventListener('submit', function (e) {
 ul.addEventListener('click', function (e) {
   const click = e.target;
   const clickText = e.target.parentElement.parentElement.textContent;
-
   if (click.classList.contains('removeBtn')) {
-    click.parentElement.parentElement.remove();
-
+    console.log(click);
     const ls = JSON.parse(localStorage.getItem('tasks'));
-    const newLs = ls.filter(lsItem => lsItem != clickText);
+
+    const newLs = ls.filter(lsItem => lsItem !== clickText);
 
     localStorage.setItem('tasks', JSON.stringify(newLs));
-  } else if (click.classList.contains('editBtn')) {
-    const editValue = [];
-    editValue.push(clickText);
-
-    console.log(editValue);
-    localStorage.setItem('editValue', editValue);
+    click.parentElement.parentElement.remove();
   }
 });
 
