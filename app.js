@@ -1,10 +1,13 @@
-const form = document.querySelector('form');
+const formSubmit = document.querySelector('#submitBtn');
 const textInput = document.getElementById('todoTask');
 const ul = document.querySelector('.task-container ul');
 const clearAll = document.querySelector('.clear-all');
 const saveBtn = document.querySelector('.saveBtn');
+
 // Once DOM is loaded, check the LS and render from it
-document.addEventListener('DOMContentLoaded', checkLS);
+window.addEventListener('DOMContentLoaded', function () {
+  checkLS();
+});
 
 // Add a task function
 function addTask(text) {
@@ -17,7 +20,7 @@ function addTask(text) {
   } else {
     li.innerHTML =
       text +
-      `<span class="btns"><i class="fas fa-edit editBtn"></i> <i class="fas fa-eraser removeBtn"></i></span>`;
+      `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
 
     ul.appendChild(li);
   }
@@ -33,7 +36,8 @@ textInput.addEventListener('focusin', function () {
 textInput.addEventListener('focusout', function () {
   textInput.placeholder = 'Write something...';
 });
-form.addEventListener('submit', function (e) {
+
+formSubmit.addEventListener('click', function (e) {
   e.preventDefault();
 
   addTask(textInput.value);
@@ -41,16 +45,14 @@ form.addEventListener('submit', function (e) {
 });
 
 ul.addEventListener('click', function (e) {
+  e.preventDefault();
   const click = e.target;
   const clickText = e.target.parentElement.parentElement.textContent;
+  console.log(clickText);
   if (click.classList.contains('removeBtn')) {
-    console.log(click);
-    const ls = JSON.parse(localStorage.getItem('tasks'));
-
-    const newLs = ls.filter(lsItem => lsItem !== clickText);
-
-    localStorage.setItem('tasks', JSON.stringify(newLs));
     click.parentElement.parentElement.remove();
+
+    storeLS();
   }
 });
 
@@ -87,6 +89,7 @@ function checkLS() {
       li.innerHTML =
         task +
         `<span class="btns"><i class="fas fa-edit editBtn"></i> <i class="fas fa-eraser removeBtn"></i></span>`;
+
       ul.appendChild(li);
     });
   }
