@@ -55,18 +55,23 @@ ul.addEventListener('click', function (e) {
     storeLS();
   } else if (click.classList.contains('editBtn')) {
     textInput.value = clickText;
-    saveBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const tasksEl = document.querySelectorAll('.task-item');
-      tasksEl.forEach(function (task) {
-        if (task.textContent == clickText) {
-          task.innerHTML =
-            textInput.value +
-            `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
-          storeLS();
-        }
+    if (textInput.value === '') {
+      return;
+    } else {
+      saveBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const tasksEl = document.querySelectorAll('.task-item');
+        tasksEl.forEach(function (task) {
+          if (task.textContent == clickText && textInput.value !== '') {
+            task.innerHTML =
+              textInput.value +
+              `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
+            storeLS();
+            textInput.value = '';
+          }
+        });
       });
-    });
+    }
   }
 });
 
