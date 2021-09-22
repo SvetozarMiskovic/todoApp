@@ -4,18 +4,9 @@ const ul = document.querySelector('.task-container ul');
 const clearAll = document.querySelector('.clear-all');
 const saveBtn = document.querySelector('.saveBtn');
 
-function checkAndEdit(e) {
-  // const liEl = document.querySelectorAll('.task-item');
-  // // const inputField = document.createElement('input[type = text]');
-  // liEl.forEach(function (li) {
-  //   if (li.textContent === clickText) {
-  //     li.addEventListener('dblclick', function () {
-  //       li.innerHTML = '';
-  //     });
-  //   }
-  // });
+function retPrev() {
+  //
 }
-
 // Once DOM is loaded, check the LS and render from it
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
@@ -88,6 +79,7 @@ ul.addEventListener('click', function (e) {
   } else if (click.classList.contains('task-item')) {
     const liEl = document.querySelectorAll('.task-item');
     clickText = e.target.textContent;
+    const itemPressed = clickText;
     console.log(clickText);
     const inputField = document.createElement('input');
     inputField.type = 'text';
@@ -105,11 +97,7 @@ ul.addEventListener('click', function (e) {
           li.innerHTML = '';
           li.appendChild(inputField);
         });
-        inputField.addEventListener('focusout', function () {
-          li.innerHTML =
-            clickText +
-            `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
-        });
+
         inputField.addEventListener('keydown', function (e) {
           if (e.key === 'Enter') {
             li.innerHTML =
@@ -117,6 +105,11 @@ ul.addEventListener('click', function (e) {
               `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
             storeLS();
           }
+        });
+        inputField.addEventListener('focusout', function () {
+          li.innerHTML =
+            itemPressed +
+            `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
         });
       }
     });
