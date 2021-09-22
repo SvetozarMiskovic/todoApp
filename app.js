@@ -1,12 +1,15 @@
+// Timezones
+const date = dayJS.get;
+// Timezones end
+
+// Todo app
+
+// Todo selectors
 const formSubmit = document.querySelector('#submitBtn');
 const textInput = document.getElementById('todoTask');
 const ul = document.querySelector('.task-container ul');
 const clearAll = document.querySelector('.clear-all');
 const saveBtn = document.querySelector('.saveBtn');
-
-function retPrev() {
-  //
-}
 // Once DOM is loaded, check the LS and render from it
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
@@ -149,3 +152,4 @@ function checkLS() {
     });
   }
 }
+// Todo app end

@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7"
   }
 }

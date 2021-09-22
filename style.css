@@ -157,3 +157,45 @@ input[type='submit']:hover {
   transform: scale(1.1);
   transition: ease-out 0.2s;
 }
+
+/* Greetings */
+.greetings {
+  margin: 1rem 0;
+}
+.greetings .container {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  background-color: #4b3869;
+  padding: 0.8rem;
+  border-radius: 3%;
+  align-items: center;
+  color: white;
+}
+
+.timezones {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: space-evenly;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.welcome {
+  text-align: center;
+}
+.welcome h2 {
+  font-size: 3rem;
+}
+
+.welcome p {
+  font-size: 1.5rem;
+}
+
+.box {
+  background-color: #63b4b8;
+  padding: 0.8rem;
+  border-radius: 10%;
+  margin: 1rem;
+}
