@@ -80,22 +80,21 @@ ul.addEventListener('click', function (e) {
     const liEl = document.querySelectorAll('.task-item');
     clickText = e.target.textContent;
     const itemPressed = clickText;
-    console.log(clickText);
+
     const inputField = document.createElement('input');
     inputField.type = 'text';
     inputField.name = 'editInput';
     inputField.id = 'editInput';
-    console.log(inputField);
+
     liEl.forEach(function (li) {
       if (li.textContent === clickText) {
-        // Do nothing when focus out
-
-        // Do nothing when focus out - END!
-
         li.addEventListener('dblclick', function () {
           inputField.value = clickText;
           li.innerHTML = '';
           li.appendChild(inputField);
+          // Do nothing when focus out
+
+          // Do nothing when focus out - END!
         });
 
         inputField.addEventListener('keydown', function (e) {
@@ -106,12 +105,10 @@ ul.addEventListener('click', function (e) {
             storeLS();
           }
         });
-        inputField.addEventListener('focusout', function () {
-          li.innerHTML =
-            itemPressed +
-            `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
-        });
       }
+      inputField.addEventListener('focusout', function () {
+        location.reload();
+      });
     });
   }
 });
