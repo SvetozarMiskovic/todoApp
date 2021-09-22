@@ -91,6 +91,7 @@ ul.addEventListener('click', function (e) {
         li.addEventListener('dblclick', function () {
           inputField.value = clickText;
           li.innerHTML = '';
+          inputField.autofocus = 'true';
           li.appendChild(inputField);
           // Do nothing when focus out
 
