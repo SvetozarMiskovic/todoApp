@@ -93,9 +93,6 @@ ul.addEventListener('click', function (e) {
           li.innerHTML = '';
           inputField.autofocus = 'true';
           li.appendChild(inputField);
-          // Do nothing when focus out
-
-          // Do nothing when focus out - END!
         });
 
         inputField.addEventListener('keydown', function (e) {
