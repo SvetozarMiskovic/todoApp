@@ -43,6 +43,8 @@ li i {
 
 i:hover {
   background-color: #a9e4d7;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Top Part */

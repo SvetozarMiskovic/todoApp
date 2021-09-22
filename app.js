@@ -4,6 +4,18 @@ const ul = document.querySelector('.task-container ul');
 const clearAll = document.querySelector('.clear-all');
 const saveBtn = document.querySelector('.saveBtn');
 
+function checkAndEdit(e) {
+  // const liEl = document.querySelectorAll('.task-item');
+  // // const inputField = document.createElement('input[type = text]');
+  // liEl.forEach(function (li) {
+  //   if (li.textContent === clickText) {
+  //     li.addEventListener('dblclick', function () {
+  //       li.innerHTML = '';
+  //     });
+  //   }
+  // });
+}
+
 // Once DOM is loaded, check the LS and render from it
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
@@ -39,15 +51,16 @@ textInput.addEventListener('focusout', function () {
 
 formSubmit.addEventListener('click', function (e) {
   e.preventDefault();
-
-  addTask(textInput.value);
+  if (textInput.value != '') {
+    addTask(textInput.value);
+  } else return;
   storeLS();
 });
 
 ul.addEventListener('click', function (e) {
   e.preventDefault();
   const click = e.target;
-  const clickText = e.target.parentElement.parentElement.textContent;
+  let clickText = e.target.parentElement.parentElement.textContent;
 
   if (click.classList.contains('removeBtn')) {
     click.parentElement.parentElement.remove();
@@ -72,6 +85,41 @@ ul.addEventListener('click', function (e) {
         });
       });
     }
+  } else if (click.classList.contains('task-item')) {
+    const liEl = document.querySelectorAll('.task-item');
+    clickText = e.target.textContent;
+    console.log(clickText);
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.name = 'editInput';
+    inputField.id = 'editInput';
+    console.log(inputField);
+    liEl.forEach(function (li) {
+      if (li.textContent === clickText) {
+        // Do nothing when focus out
+
+        // Do nothing when focus out - END!
+
+        li.addEventListener('dblclick', function () {
+          inputField.value = clickText;
+          li.innerHTML = '';
+          li.appendChild(inputField);
+        });
+        inputField.addEventListener('focusout', function () {
+          li.innerHTML =
+            clickText +
+            `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
+        });
+        inputField.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            li.innerHTML =
+              inputField.value +
+              `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
+            storeLS();
+          }
+        });
+      }
+    });
   }
 });
 
