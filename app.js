@@ -1,5 +1,6 @@
-const dayJsObject = dayjs();
+const dateObject = dayjs();
 
+console.log(dateObject.format());
 // Todo app
 
 // Todo selectors
@@ -80,7 +81,6 @@ ul.addEventListener('click', function (e) {
   } else if (click.classList.contains('task-item')) {
     const liEl = document.querySelectorAll('.task-item');
     clickText = e.target.textContent;
-    const itemPressed = clickText;
 
     const inputField = document.createElement('input');
     inputField.type = 'text';
