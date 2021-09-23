@@ -1,6 +1,4 @@
-// Timezones
-const date = dayJS.get;
-// Timezones end
+const dayJsObject = dayjs();
 
 // Todo app
 
