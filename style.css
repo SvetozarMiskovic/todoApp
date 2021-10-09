@@ -45,6 +45,7 @@ i:hover {
   background-color: #a9e4d7;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  cursor: pointer;
 }
 
 /* Top Part */
@@ -76,7 +77,40 @@ input[type='text'] {
   font-size: 1.2rem;
   font-family: 'Architects Daughter', cursive;
 }
+select,
+option {
+  outline: none;
+  height: 2rem;
+  text-align: center;
+  border: none;
+  background-color: #63b4b8;
+  font-size: 1.2rem;
+  color: #fff;
+  width: 50%;
+  cursor: pointer;
+  border-radius: 3%;
+}
 
+.newListBtn {
+  text-align: center;
+  width: 20%;
+  height: 2rem;
+  background-color: #63b4b8;
+  outline: none;
+  border: none;
+  color: #fff;
+  border-radius: 3%;
+  cursor: pointer;
+  transform: scale(1);
+  transition: ease-out 0.2s;
+  font-size: 1.2rem;
+  font-family: 'Architects Daughter', cursive;
+}
+
+.newListBtn:hover {
+  transform: scale(1.1);
+  transition: ease-out 0.2s;
+}
 input[type='submit'] {
   text-align: center;
   width: 20%;
@@ -125,6 +159,14 @@ input[type='submit']:hover {
   font-size: 1.5rem;
 }
 
+.title {
+  font-weight: 200;
+  margin: 1rem 0;
+}
+
+.title input {
+  width: 50%;
+}
 .task-container {
   display: flex;
   flex-direction: column;
@@ -133,6 +175,13 @@ input[type='submit']:hover {
   padding: 1.5rem;
   color: white;
   border-radius: 3%;
+}
+.title {
+  text-align: center;
+}
+.fa-times-circle {
+  align-self: flex-end;
+  margin: 0.5rem;
 }
 .btns {
   display: flex;
@@ -147,11 +196,14 @@ input[type='submit']:hover {
   margin: 0.5rem auto;
   border-radius: 5%;
   cursor: pointer;
+  transform: scale(1);
+  transition: ease-out 0.2s;
 }
 
 .clear-all a {
   color: #fff;
   text-decoration: none;
+  padding: 2rem;
 }
 .clear-all:hover {
   transform: scale(1.1);
