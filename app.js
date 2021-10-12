@@ -21,7 +21,6 @@ const saveBtn = document.querySelector('.saveBtn');
 const newListBtn = document.querySelector('.newListBtn');
 
 const selectBar = document.querySelector('#select-list');
-const listTitle = document.querySelectorAll('.title');
 
 // Once DOM is loaded, check the LS and render from it
 window.addEventListener('DOMContentLoaded', function () {
@@ -31,7 +30,7 @@ window.addEventListener('DOMContentLoaded', function () {
 // Add a list function
 function addList() {
   let createID = Date.now();
-  console.log(createID);
+
   const tC = document.createElement('div');
   tC.classList.add('task-container');
   tC.id = createID;
@@ -39,7 +38,7 @@ function addList() {
   title.classList.add('title');
   title.textContent = 'Name of the list...';
   const removeBtn = document.createElement('i');
-  removeBtn.classList.add('fas', 'fa-times-circle');
+  removeBtn.classList.add('fas', 'fa-times-circle', 'removeList');
   const ul = document.createElement('ul');
   ul.classList.add('task-list');
 
@@ -51,23 +50,11 @@ function addList() {
 
   const optionEl = document.createElement('option');
 
-  optionEl.textContent = `List ${selectBar.length + 1}`;
+  optionEl.textContent = title.innerText;
   optionEl.value = tC.id;
 
   selectBar.append(optionEl);
-
-  const optTracker = [];
-  let optData = { list: undefined, id: undefined };
-  const options = document.querySelectorAll('option');
-
-  options.forEach(function (option) {
-    optData.list = option.textContent;
-    optData.id = option.value;
-    optTracker.push(optData);
-    optData = { list: undefined, id: undefined };
-  });
-
-  localStorage.setItem('listTracker', JSON.stringify(optTracker));
+  storeLS();
 }
 
 /* <div class="task-container">
@@ -80,13 +67,11 @@ function addList() {
 // Add a task function
 function addTask(text) {
   const lists = document.querySelectorAll('.task-container');
-  const options = document.querySelectorAll('option');
 
   const selectedValue = selectBar.value;
   if (selectedValue != undefined) {
     lists.forEach(function (list) {
       if (list.id === selectedValue) {
-        console.log(list.id);
         const li = document.createElement('li');
         li.classList.add('task-item');
 
@@ -110,39 +95,12 @@ function addTask(text) {
 // function editTask(text) {}
 // Event listeners
 
-listTitle.forEach(function (list) {
-  list.addEventListener('dblclick', function () {
-    let savedText = list.textContent;
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
-    inputField.name = 'editInput';
-    inputField.id = 'editInput';
-    inputField.autofocus = true;
-    inputField.value = savedText;
-    list.innerHTML = '';
-    list.appendChild(inputField);
-
-    list.addEventListener('focusout', function () {
-      list.textContent = savedText;
-    });
-    inputField.addEventListener('keydown', function (e) {
-      if (inputField.value === '') {
-        return;
-      } else {
-        const text = inputField.value;
-
-        if (e.key === 'Enter') {
-          list.textContent = text;
-        }
-      }
-    });
-  });
-});
+// listTitle.forEach(function (list) {
+//
+// });
 
 newListBtn.addEventListener('click', function () {
   addList();
-
-  storeLS();
 });
 
 textInput.addEventListener('focusin', function () {
@@ -200,7 +158,7 @@ taskSection.addEventListener('click', function (e) {
     inputField.type = 'text';
     inputField.name = 'editInput';
     inputField.id = 'editInput';
-
+    inputField.setAttribute('autofocus', true);
     liEl.forEach(function (li) {
       if (li.textContent === clickText) {
         li.addEventListener('dblclick', function () {
@@ -223,6 +181,41 @@ taskSection.addEventListener('click', function (e) {
         location.reload();
       });
     });
+  } else if (click.classList.contains('title')) {
+    const titles = document.querySelectorAll('.title');
+    titles.forEach(function (title) {
+      let savedText = title.textContent;
+      title.addEventListener('dblclick', function () {
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.name = 'editInput';
+        inputField.id = 'editInput';
+
+        inputField.setAttribute('autofocus', true);
+        inputField.value = savedText;
+        title.innerHTML = '';
+        title.appendChild(inputField);
+
+        title.addEventListener('focusout', function () {
+          title.textContent = savedText;
+        });
+        inputField.addEventListener('keydown', function (e) {
+          if (inputField.value === '') {
+            return;
+          } else {
+            const text = inputField.value;
+
+            if (e.key === 'Enter') {
+              title.textContent = text;
+              storeLS();
+            }
+          }
+        });
+      });
+    });
+  } else if (click.classList.contains('removeList')) {
+    click.parentElement.remove();
+    storeLS();
   }
 });
 
@@ -247,32 +240,37 @@ clearAll.addEventListener('click', function (e) {
 // Add to Local Storage
 function storeLS() {
   const taskCont = document.querySelectorAll('.task-container');
-  const todoList = [];
-
-  let data = { id: '', title: '', tasks: [] };
-  const selectedValue = selectBar.value;
   const taskEl = document.querySelectorAll('.task-item');
 
-  taskCont.forEach(function (task) {
-    const title = task.children[1].innerText;
-    let id = task.id;
-    taskEl.forEach(function (text) {
-      if (text.parentElement.parentElement.id == selectedValue) {
-        data.tasks.push(text.innerText);
-      }
-      // const title = titleEl.textContent;
+  let todoList = [];
 
-      // if (selectedValue == task.id) {
-      // }
-    });
-    data.id = id;
-    data.title = title;
+  taskCont.forEach(function (task) {
+    const textEl = task.childNodes[2].childNodes;
+    let data = {
+      id: undefined,
+      title: undefined,
+      tasks: [],
+      optionID: undefined,
+    };
+    if (textEl.length != 0) {
+      textEl.forEach(function (text) {
+        data.tasks.push(text.innerText);
+      });
+    } else return;
+    data.id = task.id;
+    data.title = task.childNodes[1].innerText;
+    data.optionID = task.id;
 
     todoList.push(data);
-    data = { id: '', title: '', tasks: [] };
-  });
 
-  localStorage.setItem('TodoList', JSON.stringify(todoList));
+    localStorage.setItem('TodoList', JSON.stringify(todoList));
+    data = {
+      id: undefined,
+      title: undefined,
+      tasks: [],
+      optionID: undefined,
+    };
+  });
 
   // *** THE OLD WAY!!! ***
   // const tasksEl = document.querySelectorAll('.task-item');
@@ -285,35 +283,30 @@ function storeLS() {
 
 // Check, pull and render from local storage
 function checkLS() {
-  // let optData = { list: undefined, id: undefined };
-  // const optTracker = [];
-  // optTracker.push(optData);
-  // localStorage.setItem('listTracker', JSON.stringify(optTracker));
-
   const checkList = JSON.parse(localStorage.getItem('TodoList'));
-  const checkTracker = JSON.parse(localStorage.getItem('listTracker'));
 
-  if (
-    checkList != undefined ||
-    checkList != null ||
-    checkTracker != undefined ||
-    checkTracker != null
-  ) {
+  if (checkList == undefined || checkList == null) {
+    return;
+  } else {
     checkList.forEach(function (list) {
-      let id = list.id;
+      const id = list.id;
       const storageTitle = list.title;
       const tasks = list.tasks;
+      const optionID = list.optionID;
 
       const tC = document.createElement('div');
       tC.classList.add('task-container');
       tC.id = id;
+
       const title = document.createElement('h4');
       title.classList.add('title');
       title.textContent = storageTitle;
+
       const removeBtn = document.createElement('i');
-      removeBtn.classList.add('fas', 'fa-times-circle');
+      removeBtn.classList.add('fas', 'fa-times-circle', 'removeList');
       const ul = document.createElement('ul');
       ul.classList.add('task-list');
+
       tasks.forEach(function (task) {
         const li = document.createElement('li');
         li.classList.add('task-item');
@@ -330,19 +323,15 @@ function checkLS() {
 
       taskSection.appendChild(tC);
 
-      // localNumber.forEach(function (number) {});
-    });
-    checkTracker.forEach(function (object) {
-      const objectId = object.id;
-      const objectText = object.list;
       const optionEl = document.createElement('option');
 
-      optionEl.textContent = objectText;
-      optionEl.value = objectId;
+      optionEl.textContent = list.title;
+      optionEl.value = optionID;
 
       selectBar.appendChild(optionEl);
     });
   }
+
   // const lsTasks = JSON.parse(localStorage.getItem('tasks'));
 
   // if (lsTasks != undefined || lsTasks != null) {
