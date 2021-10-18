@@ -162,6 +162,7 @@ input[type='submit']:hover {
 .title {
   font-weight: 200;
   margin: 1rem 0;
+  word-break: break-all;
 }
 
 .title input {
@@ -273,14 +274,13 @@ input[type='submit']:hover {
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.1rem;
-    font-size: 150px;
 
     justify-items: center;
   }
   .box {
     padding: 0.5rem;
     margin: 0.5rem 0rem;
-    width: 60%;
+    width: 50%;
   }
   .box p {
     line-height: 2rem;
@@ -290,5 +290,30 @@ input[type='submit']:hover {
   .box h3 {
     margin: 0;
     font-size: 1.4rem;
+  }
+
+  .todo-section form {
+    display: grid;
+
+    grid-template-rows: 1fr;
+    gap: 1rem;
+  }
+  input[type='submit'],
+  input[type='text'],
+  button[type='button'],
+  select {
+    width: 100%;
+  }
+  .saveBtn {
+    margin: 1.5rem 0;
+  }
+  .btns {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0.5rem;
+    gap: 0.25rem;
+  }
+  label[for='todoTask'] {
+    margin: 2rem 0;
   }
 }
