@@ -1,14 +1,53 @@
+// Clocks
+dayjs.extend(dayjs_plugin_utc);
+dayjs.extend(dayjs_plugin_timezone);
+
+// Selectors
 const btEl = document.querySelector('#bosnia .date');
+const engEl = document.querySelector('#england .date');
+const ausEl = document.querySelector('#australia .date');
+const japEl = document.querySelector('#japan .date');
 
-let now = dayjs();
+// App
+const time = setInterval(function () {
+  const bosnia = dayjs().tz('Europe/Sarajevo');
+  const japan = dayjs().tz('Asia/Tokyo');
+  const england = dayjs().tz('Europe/London');
+  const australia = dayjs().tz('Australia/Sydney');
 
-let now2 = now.format();
-// console.log(now, now2);
-// const time = setInterval(function () {
-//   const btNew = dayjs().format();
-//   console.log(btNew);
-//   btEl.textContent = btNew;
-// }, 1000);
+  // Bosnia time
+  const bosniaDate = bosnia.format('DD/MM/YYYY').toString();
+  const bosniaTime = bosnia.format('HH:mm:ss');
+  const bosniaDay = bosnia.format('dddd');
+
+  btEl.innerHTML =
+    `${bosniaDay} </br>` + `${bosniaDate} </br>` + `${bosniaTime}`;
+
+  // England time
+  const englandDate = england.format('DD/MM/YYYY').toString();
+  const englandTime = england.format('HH:mm:ss');
+  const englandDay = england.format('dddd');
+
+  engEl.innerHTML =
+    `${englandDay} </br>` + `${englandDate} </br>` + `${englandTime}`;
+
+  // Australia time
+  const australiaDate = australia.format('DD/MM/YYYY').toString();
+  const australiaTime = australia.format('HH:mm:ss');
+  const australiaDay = australia.format('dddd');
+
+  ausEl.innerHTML =
+    `${australiaDay} </br>` + `${australiaDate} </br>` + `${australiaTime}`;
+
+  // Japan time
+  const japanDate = japan.format('DD/MM/YYYY').toString();
+  const japanTime = japan.format('HH:mm:ss');
+  const japanDay = japan.format('dddd');
+
+  japEl.innerHTML = `${japanDay} </br>` + `${japanDate} </br>` + `${japanTime}`;
+}, 1000);
+
+// End of Clocks
 
 // Todo app
 
@@ -185,6 +224,7 @@ taskSection.addEventListener('click', function (e) {
     const titles = document.querySelectorAll('.title');
     titles.forEach(function (title) {
       let savedText = title.textContent;
+
       title.addEventListener('dblclick', function () {
         const inputField = document.createElement('input');
         inputField.type = 'text';
@@ -208,14 +248,23 @@ taskSection.addEventListener('click', function (e) {
             if (e.key === 'Enter') {
               title.textContent = text;
               storeLS();
+              location.reload();
             }
           }
         });
       });
     });
   } else if (click.classList.contains('removeList')) {
-    click.parentElement.remove();
-    storeLS();
+    const ls = JSON.parse(localStorage.getItem('TodoList'));
+
+    if (ls.length == 1) {
+      click.parentElement.remove();
+      localStorage.clear();
+    } else {
+      click.parentElement.remove();
+      storeLS();
+    }
+    location.reload();
   }
 });
 
@@ -240,35 +289,33 @@ clearAll.addEventListener('click', function (e) {
 // Add to Local Storage
 function storeLS() {
   const taskCont = document.querySelectorAll('.task-container');
-  const taskEl = document.querySelectorAll('.task-item');
-
+  let data = {
+    id: '',
+    title: '',
+    tasks: [],
+    optionID: '',
+  };
   let todoList = [];
 
   taskCont.forEach(function (task) {
     const textEl = task.childNodes[2].childNodes;
-    let data = {
-      id: undefined,
-      title: undefined,
-      tasks: [],
-      optionID: undefined,
-    };
+    data.id = task.id;
+    data.title = task.childNodes[1].innerText;
+    data.optionID = task.id;
     if (textEl.length != 0) {
       textEl.forEach(function (text) {
         data.tasks.push(text.innerText);
       });
-    } else return;
-    data.id = task.id;
-    data.title = task.childNodes[1].innerText;
-    data.optionID = task.id;
+    }
 
     todoList.push(data);
 
     localStorage.setItem('TodoList', JSON.stringify(todoList));
     data = {
-      id: undefined,
-      title: undefined,
+      id: '',
+      title: '',
       tasks: [],
-      optionID: undefined,
+      optionID: '',
     };
   });
 
