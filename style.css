@@ -260,4 +260,35 @@ input[type='submit']:hover {
 .box p {
   font-size: 1.8rem;
   line-height: 3rem;
+  padding: 0.8rem;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .timezones {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.1rem;
+    font-size: 150px;
+
+    /* justify-items: center; */
+  }
+  .box {
+    padding: 0.5rem;
+    margin: 0.5rem 0rem;
+    width: 80%;
+  }
+  .box p {
+    line-height: 2rem;
+    padding: 0;
+    font-size: 1.2rem;
+  }
+  .box h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
 }

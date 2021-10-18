@@ -64,7 +64,17 @@ const selectBar = document.querySelector('#select-list');
 // Once DOM is loaded, check the LS and render from it
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
+  checkClearBtn();
 });
+
+function checkClearBtn() {
+  const lists = document.querySelectorAll('.task-container');
+  if (lists.length < 1) {
+    clearAll.classList.add('hidden');
+  } else {
+    clearAll.classList.remove('hidden');
+  }
+}
 
 // Add a list function
 function addList() {
@@ -140,6 +150,7 @@ function addTask(text) {
 
 newListBtn.addEventListener('click', function () {
   addList();
+  checkClearBtn();
 });
 
 textInput.addEventListener('focusin', function () {
@@ -264,6 +275,7 @@ taskSection.addEventListener('click', function (e) {
       click.parentElement.remove();
       storeLS();
     }
+
     location.reload();
   }
 });
@@ -284,6 +296,7 @@ clearAll.addEventListener('click', function (e) {
     });
   }
   localStorage.clear();
+  checkClearBtn();
 });
 
 // Add to Local Storage
