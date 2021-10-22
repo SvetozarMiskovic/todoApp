@@ -200,7 +200,57 @@ input[type='submit']:hover {
   transform: scale(1);
   transition: ease-out 0.2s;
 }
-
+.color-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 1.3rem 0;
+}
+.cab {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+.applyBtn {
+  background-color: #63b4b8;
+  color: #fff;
+  width: 40%;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 3%;
+  font-family: inherit;
+  font-size: 1.2rem;
+  transform: scale(1);
+  transition: ease-out 0.2s;
+  cursor: pointer;
+}
+.applyBtn:hover {
+  transform: scale(1.1);
+  transition: ease-out 0.2s;
+}
+input[type='color'] {
+  width: 15rem;
+  height: 2rem;
+  border: none;
+  transform: scale(1);
+  transition: ease-out 0.2s;
+}
+input[type='color']:hover {
+  transform: scale(1.1);
+  transition: ease-out 0.2s;
+}
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: 2px #63b4b8 solid;
+}
+input[type='color']::-webkit-color-swatch {
+  border: none;
+}
 .clear-all a {
   color: #fff;
   text-decoration: none;
@@ -266,6 +316,11 @@ input[type='submit']:hover {
 
 .hidden {
   display: none;
+}
+input[type='color'] {
+  outline: none;
+
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

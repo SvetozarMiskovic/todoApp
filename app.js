@@ -58,13 +58,30 @@ const textInput = document.getElementById('todoTask');
 const clearAll = document.querySelector('.clear-all');
 const saveBtn = document.querySelector('.saveBtn');
 const newListBtn = document.querySelector('.newListBtn');
-
+const todoApp = document.querySelector('.todo-app');
 const selectBar = document.querySelector('#select-list');
+
+const applyBtn = document.querySelector('.applyBtn');
 
 // Once DOM is loaded, check the LS and render from it
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
   checkClearBtn();
+});
+applyBtn.addEventListener('click', function () {
+  const colorPicker = document.querySelector('#colorPicker');
+  const lists = document.querySelectorAll('.task-container');
+
+  const selectedValue = selectBar.value;
+  if (selectedValue != undefined) {
+    lists.forEach(function (list) {
+      if (list.id === selectedValue) {
+        list.style.backgroundColor = colorPicker.value;
+        console.log(colorPicker.value);
+      }
+      storeLS();
+    });
+  }
 });
 
 function checkClearBtn() {
@@ -76,7 +93,6 @@ function checkClearBtn() {
   }
 }
 
-// Add a list function
 function addList() {
   let createID = Date.now();
 
@@ -90,11 +106,9 @@ function addList() {
   removeBtn.classList.add('fas', 'fa-times-circle', 'removeList');
   const ul = document.createElement('ul');
   ul.classList.add('task-list');
-
   tC.appendChild(removeBtn);
   tC.appendChild(title);
   tC.appendChild(ul);
-
   taskSection.appendChild(tC);
 
   const optionEl = document.createElement('option');
@@ -176,7 +190,7 @@ taskSection.addEventListener('click', function (e) {
   e.preventDefault();
   const click = e.target;
   let clickText = e.target.parentElement.parentElement.textContent;
-
+  console.log(click);
   if (click.classList.contains('removeBtn')) {
     click.parentElement.parentElement.remove();
 
@@ -302,11 +316,13 @@ clearAll.addEventListener('click', function (e) {
 // Add to Local Storage
 function storeLS() {
   const taskCont = document.querySelectorAll('.task-container');
+
   let data = {
     id: '',
     title: '',
     tasks: [],
     optionID: '',
+    color: '',
   };
   let todoList = [];
 
@@ -315,6 +331,7 @@ function storeLS() {
     data.id = task.id;
     data.title = task.childNodes[1].innerText;
     data.optionID = task.id;
+    data.color = task.style.backgroundColor;
     if (textEl.length != 0) {
       textEl.forEach(function (text) {
         data.tasks.push(text.innerText);
@@ -329,6 +346,7 @@ function storeLS() {
       title: '',
       tasks: [],
       optionID: '',
+      color: '',
     };
   });
 
@@ -353,10 +371,12 @@ function checkLS() {
       const storageTitle = list.title;
       const tasks = list.tasks;
       const optionID = list.optionID;
+      const color = list.color;
 
       const tC = document.createElement('div');
       tC.classList.add('task-container');
       tC.id = id;
+      tC.style.backgroundColor = color;
 
       const title = document.createElement('h4');
       title.classList.add('title');

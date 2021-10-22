@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App</title>
+
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -58,14 +59,23 @@
 
               <select name="select-list" id="select-list"></select>
             </div>
+            <div class="color-picker">
+              <label for="colorPicker">Color your list!</label>
+              <div class="cab">
+                <input type="color" name="colorPicker" id="colorPicker" />
+                <button type="button" class="applyBtn">Apply</button>
+              </div>
+            </div>
           </form>
         </div>
         <div class="task-section"></div>
+
         <div class="clear-all">
           <a href="#" class="clearBtn">Clear all</a>
         </div>
       </div>
     </section>
+
     <script src="https://unpkg.com/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="https://unpkg.com/dayjs@1.10.7/plugin/utc.js"></script>
     <script src="https://unpkg.com/dayjs@1.10.7/plugin/timezone.js"></script>
