@@ -59,9 +59,12 @@ window.addEventListener('DOMContentLoaded', function () {
   checkColor();
 });
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Check which option is selected and color!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 function checkColor() {
   let rgb = { r: 0, g: 0, b: 0 };
-
+  function rgbToHex(r, g, b) {
+    return '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16);
+  }
   const colorPicker = document.querySelector('#colorPicker');
   const lists = document.querySelectorAll('.task-container');
   const selectedValue = selectBar.value;
@@ -76,16 +79,11 @@ function checkColor() {
       const g = Number(rgbColArr[1]);
       const b = Number(rgbColArr[2]);
       rgb = { r: r, g: g, b: b };
-
-      function rgbToHex(r, g, b) {
-        return (
-          '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16)
-        );
-      }
-      const color = rgbToHex();
-      colorPicker.value = color;
     }
   });
+  const color = rgbToHex();
+
+  colorPicker.value = color;
 }
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Hide/Show Clear all button function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function checkClearBtn() {
@@ -113,6 +111,7 @@ function addList() {
   tC.appendChild(removeBtn);
   tC.appendChild(title);
   tC.appendChild(ul);
+  tC.style.backgroundColor = '#4b3869';
   taskSection.appendChild(tC);
 
   const optionEl = document.createElement('option');
@@ -167,11 +166,13 @@ applyBtn.addEventListener('click', function () {
       storeLS();
     });
   }
+  checkColor();
 });
 
 newListBtn.addEventListener('click', function () {
   addList();
   checkClearBtn();
+  checkColor();
 });
 
 textInput.addEventListener('focusin', function () {
