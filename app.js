@@ -56,8 +56,37 @@ const applyBtn = document.querySelector('.applyBtn');
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
   checkClearBtn();
+  checkColor();
 });
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Check which option is selected and color!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function checkColor() {
+  let rgb = { r: 0, g: 0, b: 0 };
 
+  const colorPicker = document.querySelector('#colorPicker');
+  const lists = document.querySelectorAll('.task-container');
+  const selectedValue = selectBar.value;
+  lists.forEach(function (list) {
+    if (list.id === selectedValue) {
+      let rgbCol = list.style.backgroundColor.slice(
+        4,
+        list.style.backgroundColor.length - 1
+      );
+      const rgbColArr = rgbCol.split(',');
+      const r = Number(rgbColArr[0]);
+      const g = Number(rgbColArr[1]);
+      const b = Number(rgbColArr[2]);
+      rgb = { r: r, g: g, b: b };
+
+      function rgbToHex(r, g, b) {
+        return (
+          '#' + rgb.r.toString(16) + rgb.g.toString(16) + rgb.b.toString(16)
+        );
+      }
+      const color = rgbToHex();
+      colorPicker.value = color;
+    }
+  });
+}
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Hide/Show Clear all button function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function checkClearBtn() {
   const lists = document.querySelectorAll('.task-container');
@@ -122,7 +151,9 @@ function addTask(text) {
 }
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Event listeners!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+selectBar.addEventListener('click', function () {
+  checkColor();
+});
 applyBtn.addEventListener('click', function () {
   const colorPicker = document.querySelector('#colorPicker');
   const lists = document.querySelectorAll('.task-container');
