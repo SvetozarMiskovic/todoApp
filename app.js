@@ -1,4 +1,6 @@
-// Clocks
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Timer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// Plugins
 dayjs.extend(dayjs_plugin_utc);
 dayjs.extend(dayjs_plugin_timezone);
 
@@ -8,7 +10,15 @@ const engEl = document.querySelector('#england .date');
 const ausEl = document.querySelector('#australia .date');
 const japEl = document.querySelector('#japan .date');
 
-// App
+// Format Dates Function
+const formatDates = function (country, element) {
+  const date = country.format('DD/MM/YYYY').toString();
+  const time = country.format('HH:mm:ss');
+  const day = country.format('dddd');
+
+  return (element.innerHTML = `${day} </br>` + `${date} </br>` + `${time}`);
+};
+// Clocks
 const time = setInterval(function () {
   const bosnia = dayjs().tz('Europe/Sarajevo');
   const japan = dayjs().tz('Asia/Tokyo');
@@ -16,40 +26,19 @@ const time = setInterval(function () {
   const australia = dayjs().tz('Australia/Sydney');
 
   // Bosnia time
-  const bosniaDate = bosnia.format('DD/MM/YYYY').toString();
-  const bosniaTime = bosnia.format('HH:mm:ss');
-  const bosniaDay = bosnia.format('dddd');
-
-  btEl.innerHTML =
-    `${bosniaDay} </br>` + `${bosniaDate} </br>` + `${bosniaTime}`;
-
+  formatDates(bosnia, btEl);
   // England time
-  const englandDate = england.format('DD/MM/YYYY').toString();
-  const englandTime = england.format('HH:mm:ss');
-  const englandDay = england.format('dddd');
-
-  engEl.innerHTML =
-    `${englandDay} </br>` + `${englandDate} </br>` + `${englandTime}`;
-
+  formatDates(england, engEl);
   // Australia time
-  const australiaDate = australia.format('DD/MM/YYYY').toString();
-  const australiaTime = australia.format('HH:mm:ss');
-  const australiaDay = australia.format('dddd');
-
-  ausEl.innerHTML =
-    `${australiaDay} </br>` + `${australiaDate} </br>` + `${australiaTime}`;
-
+  formatDates(australia, ausEl);
   // Japan time
-  const japanDate = japan.format('DD/MM/YYYY').toString();
-  const japanTime = japan.format('HH:mm:ss');
-  const japanDay = japan.format('dddd');
 
-  japEl.innerHTML = `${japanDay} </br>` + `${japanDate} </br>` + `${japanTime}`;
+  formatDates(japan, japEl);
 }, 1000);
 
-// End of Clocks
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!End of Timer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// Todo app
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Todo app !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Todo selectors
 const taskSection = document.querySelector('.task-section');
@@ -60,30 +49,16 @@ const saveBtn = document.querySelector('.saveBtn');
 const newListBtn = document.querySelector('.newListBtn');
 const todoApp = document.querySelector('.todo-app');
 const selectBar = document.querySelector('#select-list');
-
 const applyBtn = document.querySelector('.applyBtn');
 
 // Once DOM is loaded, check the LS and render from it
+
 window.addEventListener('DOMContentLoaded', function () {
   checkLS();
   checkClearBtn();
 });
-applyBtn.addEventListener('click', function () {
-  const colorPicker = document.querySelector('#colorPicker');
-  const lists = document.querySelectorAll('.task-container');
 
-  const selectedValue = selectBar.value;
-  if (selectedValue != undefined) {
-    lists.forEach(function (list) {
-      if (list.id === selectedValue) {
-        list.style.backgroundColor = colorPicker.value;
-        console.log(colorPicker.value);
-      }
-      storeLS();
-    });
-  }
-});
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Hide/Show Clear all button function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function checkClearBtn() {
   const lists = document.querySelectorAll('.task-container');
   if (lists.length < 1) {
@@ -92,7 +67,7 @@ function checkClearBtn() {
     clearAll.classList.remove('hidden');
   }
 }
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add a list function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function addList() {
   let createID = Date.now();
 
@@ -120,14 +95,8 @@ function addList() {
   storeLS();
 }
 
-/* <div class="task-container">
-            <ul class="task-list"></ul>
-            <div class="clear-all">
-              <a href="#" class="clearBtn">Clear all</a>
-            </div>
-          </div> */
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add a task function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// Add a task function
 function addTask(text) {
   const lists = document.querySelectorAll('.task-container');
 
@@ -149,18 +118,25 @@ function addTask(text) {
       }
     });
   }
-
-  // donji dio
-
   textInput.value = '';
 }
 
-// function editTask(text) {}
-// Event listeners
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Event listeners!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// listTitle.forEach(function (list) {
-//
-// });
+applyBtn.addEventListener('click', function () {
+  const colorPicker = document.querySelector('#colorPicker');
+  const lists = document.querySelectorAll('.task-container');
+
+  const selectedValue = selectBar.value;
+  if (selectedValue != undefined) {
+    lists.forEach(function (list) {
+      if (list.id === selectedValue) {
+        list.style.backgroundColor = colorPicker.value;
+      }
+      storeLS();
+    });
+  }
+});
 
 newListBtn.addEventListener('click', function () {
   addList();
@@ -177,8 +153,6 @@ textInput.addEventListener('focusout', function () {
 
 formSubmit.addEventListener('click', function (e) {
   e.preventDefault();
-  // // const selected = selectBar.options[selectBar.selectedIndex].text;
-  // const lists = document.querySelectorAll('.task-container');
 
   if (textInput.value != '') {
     addTask(textInput.value);
@@ -190,11 +164,13 @@ taskSection.addEventListener('click', function (e) {
   e.preventDefault();
   const click = e.target;
   let clickText = e.target.parentElement.parentElement.textContent;
-  console.log(click);
+
+  // !!!!!!Remove a task!!!!!!
   if (click.classList.contains('removeBtn')) {
     click.parentElement.parentElement.remove();
 
     storeLS();
+    // !!!!!!Edit a task!!!!!!
   } else if (click.classList.contains('editBtn')) {
     textInput.value = clickText;
     if (textInput.value === '') {
@@ -214,6 +190,7 @@ taskSection.addEventListener('click', function (e) {
         });
       });
     }
+    // !!!!!!Edit a task(secondary option)!!!!!!
   } else if (click.classList.contains('task-item')) {
     const liEl = document.querySelectorAll('.task-item');
     clickText = e.target.textContent;
@@ -245,6 +222,7 @@ taskSection.addEventListener('click', function (e) {
         location.reload();
       });
     });
+    // !!!!!!Edit a title!!!!!!
   } else if (click.classList.contains('title')) {
     const titles = document.querySelectorAll('.title');
     titles.forEach(function (title) {
@@ -279,6 +257,7 @@ taskSection.addEventListener('click', function (e) {
         });
       });
     });
+    // !!!!!!Remove a list!!!!!!
   } else if (click.classList.contains('removeList')) {
     const ls = JSON.parse(localStorage.getItem('TodoList'));
 
@@ -313,7 +292,8 @@ clearAll.addEventListener('click', function (e) {
   checkClearBtn();
 });
 
-// Add to Local Storage
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add to Local Storage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 function storeLS() {
   const taskCont = document.querySelectorAll('.task-container');
 
@@ -349,17 +329,10 @@ function storeLS() {
       color: '',
     };
   });
-
-  // *** THE OLD WAY!!! ***
-  // const tasksEl = document.querySelectorAll('.task-item');
-  // const tasks = [];
-
-  // tasksEl.forEach(function (task) {
-  //   tasks.push(task.textContent);
-  // });
 }
 
-// Check, pull and render from local storage
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Read from local storage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 function checkLS() {
   const checkList = JSON.parse(localStorage.getItem('TodoList'));
 
@@ -411,19 +384,5 @@ function checkLS() {
       selectBar.appendChild(optionEl);
     });
   }
-
-  // const lsTasks = JSON.parse(localStorage.getItem('tasks'));
-
-  // if (lsTasks != undefined || lsTasks != null) {
-  //   lsTasks.forEach(function (task) {
-  //     const li = document.createElement('li');
-  //     li.classList.add('task-item');
-  //     li.innerHTML =
-  //       task +
-  //       `<span class="btns"><i class="fas fa-edit editBtn"></i><i class="fas fa-eraser removeBtn"></i></span>`;
-
-  //     ul.appendChild(li);
-  //   });
-  // }
 }
-// Todo app end
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!End of Todo app !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
